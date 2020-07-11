@@ -41,7 +41,7 @@ public class OrderRepositoryImpl implements OrdersRepository {
         } catch (SQLException e) {
             throw new DatabaseException(e.getMessage(), e);
         }
-        if(order==null) {
+        if (order == null) {
             throw new RuntimeException(String.format("Order by id %d not found", id));
         } else {
             return order;
@@ -84,15 +84,27 @@ public class OrderRepositoryImpl implements OrdersRepository {
     }
 
     @Override
-    public void insertOrder(OrderEntity order) {
+    public long insertOrder(OrderEntity order) {
+        long id;
         String insertQuery = String.format("insert into shop.order (name, client) values (\"%s\", \"%s\")", order.getName(), order.getClient());
         try (Connection connection = dbConnection.connection(); Statement statement = connection.createStatement()) {
-            statement.executeUpdate(insertQuery);
+            statement.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            id = getLastId(statement);
             for (OrderDetailEntity detailEntity : order.getOrderDetailEntities()) {
-                orderDetailsRepository.insertDetail(detailEntity, order.getId());
+                orderDetailsRepository.insertDetail(detailEntity, id);
             }
         } catch (SQLException e) {
             throw new DatabaseException(e.getMessage(), e);
         }
+        return id;
+    }
+
+    private long getLastId(Statement statement) throws SQLException {
+        long id = 0;
+            ResultSet resultSet = statement.executeQuery("SELECT LAST_INSERT_ID() AS LAST_ID");
+            if (resultSet.next()) {
+                id = Long.parseLong(resultSet.getString("LAST_ID"));
+            }
+        return id;
     }
 }

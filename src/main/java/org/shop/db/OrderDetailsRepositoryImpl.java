@@ -40,11 +40,11 @@ public class OrderDetailsRepositoryImpl implements OrderDetailsRepository {
     }
 
     @Override
-    public void insertDetail(OrderDetailEntity orderDetail, long orderId) {
+    public void insertDetail(OrderDetailEntity orderDetail, long id) {
         String insertQuery = String.format("insert into shop.order_detail (name, price, order_id) values (\"%s\", %.3f, %d);",
                 orderDetail.getName(),
                 orderDetail.getPrice(),
-                orderId);
+                id);
         try (Connection connection = dbConnection.connection(); Statement statement = connection.createStatement()) {
             statement.executeUpdate(insertQuery);
         } catch (SQLException e) {

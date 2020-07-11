@@ -12,13 +12,12 @@ public interface OrdersService {
     List<OrderDto> findAll();
 
     /**
-     *
      * @param id - order unique identifier
      * @return order and its' details
      */
     OrderDto findOrderBy(long id);
 
-    void saveOrder(OrderDto orderDto);
+    long saveOrder(OrderDto orderDto);
 
     void deleteOrder(long orderId);
 
@@ -29,9 +28,11 @@ public interface OrdersService {
 
     /**
      * the order is considered to be big if it has more then 3 order details
+     *
      * @return
      */
     List<OrderDto> findBigOrders();
-     double findOrderPrice(long orderId);
+
+    double findOrderPrice(long orderId);
 
 }

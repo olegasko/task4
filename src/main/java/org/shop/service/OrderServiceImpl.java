@@ -31,8 +31,8 @@ public class OrderServiceImpl implements OrdersService {
     }
 
     @Override
-    public void saveOrder(OrderDto orderDto) {
-        ordersRepository.insertOrder(orderDto.convert());
+    public long saveOrder(OrderDto orderDto) {
+        return ordersRepository.insertOrder(orderDto.convert());
     }
 
     @Override

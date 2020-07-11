@@ -16,6 +16,6 @@ public interface OrdersRepository {
 
     void deleteOrder(long id);
 
-    void insertOrder(OrderEntity order);
+    long insertOrder(OrderEntity order);
 
 }

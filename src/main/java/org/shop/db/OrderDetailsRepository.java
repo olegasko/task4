@@ -12,5 +12,5 @@ public interface OrderDetailsRepository {
 
     List<OrderDetailEntity> findAllDetails(long id);
 
-    void insertDetail(OrderDetailEntity orderDetail, long orderId);
+    void insertDetail(OrderDetailEntity orderDetail, long id);
 }
