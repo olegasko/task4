@@ -1,7 +1,14 @@
 package org.shop.db.entity;
 
-import java.util.List;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.shop.dto.OrderDto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Builder
+@NoArgsConstructor
 public class OrderEntity {
     private long id;
     private String name;
@@ -39,5 +46,14 @@ public class OrderEntity {
                 ", client='" + client + '\'' +
                 ", orderDetailEntities=" + orderDetailEntities +
                 '}';
+    }
+
+    public OrderDto convert() {
+        return OrderDto
+                .builder()
+                .id(this.getId())
+                .name(this.getName())
+                .orderDetails(this.getOrderDetailEntities().stream().map(OrderDetailEntity::convert).collect(Collectors.toList()))
+                .build();
     }
 }
