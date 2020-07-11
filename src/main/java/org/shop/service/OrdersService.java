@@ -18,8 +18,6 @@ public interface OrdersService {
      */
     OrderDto findOrderBy(long id);
 
-    double findOrderPrice(long orderId);
-
     void saveOrder(OrderDto orderDto);
 
     void deleteOrder(long orderId);
@@ -35,5 +33,6 @@ public interface OrdersService {
 //     * @return
 //     */
 //    List<OrderDto> findBigOrders();
+//     double findOrderPrice(long orderId);
 
 }
