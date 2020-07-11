@@ -1,6 +1,10 @@
 package org.shop.db.entity;
 
 
+import lombok.Builder;
+import org.shop.dto.OrderDetailDto;
+
+@Builder
 public class OrderDetailEntity {
     private long id;
     private String name;
@@ -33,4 +37,12 @@ public class OrderDetailEntity {
                 '}';
     }
 
+    public OrderDetailDto convert() {
+        return OrderDetailDto
+                .builder()
+                .id(this.getId())
+                .name(this.getName())
+                .price(this.getPrice())
+                .build();
+    }
 }
